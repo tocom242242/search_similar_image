@@ -1,4 +1,4 @@
-from search_img import __version__
+from search_similar_image import __version__
 
 
 def test_version():
