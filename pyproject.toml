@@ -6,6 +6,8 @@ authors = ["tocom <tcom242242@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+timm = "^0.6.12"
+faiss-cpu = "^1.7.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
@@ -15,6 +17,7 @@ black = "^22.12.0"
 flake8 = "^6.0.0"
 isort = "^5.11.4"
 mypy = "^0.991"
+ipython = "^8.7.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
