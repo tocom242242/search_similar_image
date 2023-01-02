@@ -20,5 +20,5 @@ mypy = "^0.991"
 ipython = "^8.7.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
