@@ -8,6 +8,7 @@ import torch
 from PIL import Image
 from timm.data import resolve_data_config
 from timm.data.transforms_factory import create_transform
+
 from search_similar_image.utils import data_utils
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -25,7 +26,6 @@ class SearchModel:
 
     def fit(self, source_dir: str):
         self.source_img_paths = np.array(data_utils.get_img_paths(source_dir))
-        print(self.source_img_paths)
         features = []
         for source_img_path in self.source_img_paths:
             img = Image.open(source_img_path).convert("RGB")
