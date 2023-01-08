@@ -3,7 +3,7 @@ import pytest
 from PIL import Image
 
 from search_similar_image import __version__
-from search_similar_image.model.search_model import SearchModel
+from search_similar_image.model import SearchModel
 
 
 def test_version():
