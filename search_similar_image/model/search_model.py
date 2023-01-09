@@ -29,14 +29,14 @@ class SearchModel:
         features = []
         for source_img_path in self.source_img_paths:
             img = Image.open(source_img_path).convert("RGB")
-            feature = self.extract_feature(img)
+            feature = self._extract_feature(img)
             features.append(feature.squeeze(0).numpy())
         features = np.array(features)
 
         self.index = faiss.IndexFlatL2(features.shape[1])
         self.index.add(features)
 
-    def extract_feature(self, img: Image) -> torch.Tensor:
+    def _extract_feature(self, img: Image) -> torch.Tensor:
         with torch.no_grad():
             img_tensor = self.transform(img)
             feature = self.model(img_tensor.unsqueeze(0))
@@ -44,13 +44,9 @@ class SearchModel:
 
     def predict(self, target_img_path: str) -> Tuple[List, List]:
         img = Image.open(target_img_path).convert("RGB")
-        feature = self.extract_feature(img)
+        feature = self._extract_feature(img)
         feature = feature.numpy()
 
         D, indexes = self.index.search(feature, 5)
         neighbor_img_paths = self.source_img_paths[indexes]
         return D, neighbor_img_paths
-
-
-if __name__ == "__main__":
-    model = SearchModel()
