@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import List, Tuple
+from typing import List
 
-EXTENSIONS = ['.jpg', '.jpeg', '.png', '.bmp']
+EXTENSIONS = [".jpg", ".jpeg", ".png", ".bmp"]
+
 
 def get_img_paths(source_dir: str) -> List[str]:
     img_paths = []
