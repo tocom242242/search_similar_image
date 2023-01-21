@@ -1,0 +1,46 @@
+name: learn-github-actions
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "this is pen"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: cache poetry install
+        uses: actions/cache@v2
+        with:
+          path: ~/.local
+          key: poetry-1.1.12-0
+      - uses: snok/install-poetry@v1
+        with:
+          version: 1.3.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+      - name: cache deps
+        id: cache-deps
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: pydeps-${{ hashFiles('**/poetry.lock') }}
+      - run: poetry install --no-interaction --no-root
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+      - run: poetry install --no-interaction
+      - run: poetry run pytest
+      # pdocでドキュメントを生成
+      - name: Pdoc
+        run: poetry run pdoc --html -o docs --force search_similar_image/
+        # 差分をgitにpushする
+      # ref: https://zenn.dev/lollipop_onl/articles/eoz-gha-push-diffs
+      - name: Push new docs
+        run: |
+          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          if (git diff --shortstat | grep '[0-9]'); then \
+            git add .; \
+            git commit -m "Generating docs via GitHub Actions"; \
+            git push origin HEAD:${GITHUB_REF}; \
+          fi
