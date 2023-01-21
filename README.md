@@ -5,7 +5,7 @@ Simple library to find similar image using pretrained model and KNN.
 ## How to Use
 
 ```bash
-pip install
+pip install search-similar-image
 ```
 
 ```python
