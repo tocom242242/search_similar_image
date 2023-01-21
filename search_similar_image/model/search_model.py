@@ -16,6 +16,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class SearchModel:
     def __init__(self, model_name: str = "vit_base_patch16_224"):
+        """Simple Search Similar Image Model.
+
+        Args:
+            model_name (str, optional): pretrained model name. Defaults to "vit_base_patch16_224".
+        """
         self.model = timm.create_model(model_name, pretrained=True, num_classes=0)
         self.model.to(device)
         self.model.eval()
@@ -25,6 +30,11 @@ class SearchModel:
         self.source_img_paths = None
 
     def fit(self, source_dir: str):
+        """Fit k nearest neighbour model using features outputted from pretrained model
+
+        Args:
+            source_dir (str): Path of images
+        """
         self.source_img_paths = np.array(data_utils.get_img_paths(source_dir))
         features = []
         for source_img_path in self.source_img_paths:
@@ -43,6 +53,14 @@ class SearchModel:
         return feature
 
     def predict(self, target_img_path: str) -> Tuple[List, List]:
+        """Predict nearest neighbor of the image
+
+        Args:
+            target_img_path (str): The target image path for prediction.
+
+        Returns:
+            Tuple[List, List]: Scores and neighbor image paths
+        """
         img = Image.open(target_img_path).convert("RGB")
         feature = self._extract_feature(img)
         feature = feature.numpy()
