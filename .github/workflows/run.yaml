@@ -31,7 +31,7 @@ jobs:
       - run: poetry run pytest
       # pdocでドキュメントを生成
       - name: Pdoc
-        run: poetry run pdoc --html -o docs --force main.py
+        run: poetry run pdoc --html -o docs --force search_similar_image/
         # 差分をgitにpushする
       # ref: https://zenn.dev/lollipop_onl/articles/eoz-gha-push-diffs
       - name: Push new docs
