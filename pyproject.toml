@@ -2,6 +2,8 @@
 name = "search_similar_image"
 version = "0.1.0"
 description = ""
+homepage = "https://github.com/tocom242242"
+repository = "https://github.com/tocom242242/search_similar_image"
 authors = ["tocom <tcom242242@gmail.com>"]
 
 [tool.poetry.dependencies]
