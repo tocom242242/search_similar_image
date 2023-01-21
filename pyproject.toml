@@ -8,6 +8,7 @@ authors = ["tocom <tcom242242@gmail.com>"]
 python = "^3.10"
 timm = "^0.6.12"
 faiss-cpu = "^1.7.3"
+pdoc3 = "^0.10.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
